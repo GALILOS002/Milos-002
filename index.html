@@ -1,0 +1,440 @@
+from pathlib import Path
+import zipfile, shutil
+
+out = Path("/mnt/data/Boyfriend_Quest_V2")
+if out.exists():
+    shutil.rmtree(out)
+out.mkdir()
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070512">
+<title>THE BOYFRIEND QUEST — Our Story ❤️</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;overflow-x:hidden;color:#fff;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#05030e}
+button{font:inherit}
+#space{position:fixed;inset:0;z-index:-2;background:
+radial-gradient(circle at 18% 15%,rgba(139,70,190,.35),transparent 28%),
+radial-gradient(circle at 82% 75%,rgba(69,70,190,.28),transparent 30%),
+radial-gradient(circle at 50% 45%,rgba(255,80,150,.08),transparent 32%),
+#05030e}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{to{opacity:.12;transform:scale(.45)}}
+#app{width:min(920px,92vw);margin:auto;min-height:100vh;padding:28px 0}
+.card{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.065);backdrop-filter:blur(18px);border-radius:32px;padding:34px;box-shadow:0 30px 100px #0009}
+section{animation:enter .65s ease}
+@keyframes enter{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+.hidden{display:none!important}
+.center{text-align:center}
+.eyebrow{text-transform:uppercase;letter-spacing:3px;color:#ff9bc4;font-size:11px;font-weight:900}
+h1{font-size:clamp(45px,9vw,82px);line-height:.9;margin:16px 0;background:linear-gradient(90deg,#fff,#ff76b3,#b9a5ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(30px,5vw,46px);margin:12px 0}
+h3{margin-bottom:6px}
+p{line-height:1.75;color:#ddd}
+.small{font-size:13px;color:#aaa}
+.hero-icon{font-size:82px;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+button{border:0;border-radius:999px;padding:14px 24px;color:#fff;background:linear-gradient(135deg,#ff5fa2,#947cff);font-weight:900;cursor:pointer;box-shadow:0 12px 35px #ff5fa233;transition:.2s}
+button:hover{transform:translateY(-2px) scale(1.02)}
+button.secondary{background:rgba(255,255,255,.1);box-shadow:none}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.chapter{font-size:12px;font-weight:900;letter-spacing:2px;color:#cbbcff}
+.progress{height:6px;border-radius:99px;background:#ffffff12;overflow:hidden;margin:0 0 28px}
+.progress>div{height:100%;width:0;background:linear-gradient(90deg,#ff5fa2,#a88cff);transition:.5s}
+.choice-grid{display:grid;gap:12px;margin:24px 0}
+.choice{padding:17px;border-radius:17px;border:1px solid #ffffff18;background:#ffffff09;cursor:pointer;transition:.2s}
+.choice:hover{background:#ff5fa21b;transform:translateX(5px)}
+.choice.disabled{pointer-events:none}
+.feedback{min-height:30px;font-weight:800;margin:15px 0}
+.good{color:#8fffd0}.bad{color:#ff9eae}
+.timeline{display:grid;gap:14px;margin:25px 0}
+.timeline-item{display:flex;gap:15px;align-items:flex-start;padding:17px;border-radius:18px;background:#ffffff08;border:1px solid #ffffff10}
+.dot{width:42px;height:42px;min-width:42px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff5fa2,#8f7cff)}
+.distance{display:grid;grid-template-columns:1fr auto 1fr;gap:15px;align-items:center;margin:28px 0}
+.country{padding:22px;border-radius:20px;background:#ffffff08;border:1px solid #ffffff10}
+.flag{font-size:48px}
+.line{height:2px;background:linear-gradient(90deg,transparent,#ff79b5,transparent);position:relative}
+.line:after{content:"❤️";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#0c0715;padding:5px}
+.teddy{font-size:88px;animation:float 2.8s ease-in-out infinite}
+.vault{padding:25px;border-radius:24px;background:linear-gradient(135deg,#171027,#0b0814);border:1px solid #ffffff12;box-shadow:inset 0 0 50px #0005}
+.secret{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#ffb4d2}
+.big-date{font-size:clamp(36px,7vw,70px);font-weight:1000;letter-spacing:-2px}
+.meter{height:14px;background:#ffffff10;border-radius:99px;overflow:hidden;margin:18px 0}
+.meter span{display:block;height:100%;width:75%;background:linear-gradient(90deg,#ff5fa2,#a98cff)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:22px 0}
+.chip{padding:8px 12px;border-radius:999px;background:#ffffff0d;border:1px solid #ffffff12;color:#ddd;font-size:13px}
+.letter{white-space:pre-line;text-align:left;line-height:1.9;font-size:18px;padding:25px;border-radius:22px;background:#0003;border:1px solid #ffffff10}
+.gift{margin-top:25px;padding:30px;border-radius:26px;background:radial-gradient(circle at 50% 20%,#5a1740,#130918 65%);border:1px solid #ff78b522}
+.giftbox{font-size:90px;cursor:pointer;animation:pulse 1.7s infinite}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.reward{font-size:25px;color:#ff9bc4;font-weight:1000}
+.photo-note{font-size:12px;color:#999;margin-top:18px}
+@media(max-width:650px){.card{padding:23px}.distance{grid-template-columns:1fr}.line{height:30px;width:2px;margin:auto}.line:after{top:50%;left:50%}.country{text-align:center}.hero-icon{font-size:65px}}
+</style>
+</head>
+<body>
+<div id="space"></div><div id="stars"></div>
+
+<main id="app">
+<div class="card">
+
+<section id="start" class="center">
+  <div class="hero-icon">🌌</div>
+  <div class="eyebrow">CLASSIFIED • FOR ONE PERSON ONLY</div>
+  <h1>The Boyfriend Quest</h1>
+  <p>A tiny story hidden inside a game.</p>
+  <p>Two countries. One relationship. A ridiculous amount of feelings.</p>
+  <br>
+  <button onclick="go('begin')">Start Our Story ❤️</button>
+  <p class="small">Warning: may contain emotional damage, terrible jokes and one very important teddy.</p>
+</section>
+
+<section id="begin" class="hidden">
+  <div class="nav"><span class="chapter">CHAPTER 01</span><span>🌙</span></div>
+  <div class="progress"><div style="width:20%"></div></div>
+  <div class="eyebrow">THE BEGINNING</div>
+  <h2>11 June 2026.</h2>
+  <div class="big-date">11 • 06 • 2026</div>
+  <p>Some stories begin with a grand cinematic soundtrack.</p>
+  <p>Ours began with two people deciding that, somehow, <strong>this</strong> was worth trying.</p>
+  <div class="timeline">
+    <div class="timeline-item"><div class="dot">❤️</div><div><strong>The day we became us.</strong><br><span class="small">File status: permanently saved.</span></div></div>
+    <div class="timeline-item"><div class="dot">📞</div><div><strong>The calls.</strong><br><span class="small">Hours of talking. Sometimes about absolutely nothing.</span></div></div>
+    <div class="timeline-item"><div class="dot">🌍</div><div><strong>The distance.</strong><br><span class="small">Annoying. Temporary. Not stronger than us.</span></div></div>
+  </div>
+  <button onclick="go('distance')">Continue the story →</button>
+</section>
+
+<section id="distance" class="hidden center">
+  <div class="nav"><span class="chapter">CHAPTER 02</span><span>🗺️</span></div>
+  <div class="progress"><div style="width:40%"></div></div>
+  <div class="eyebrow">THE LONG-DISTANCE FILE</div>
+  <h2>Loading: together...</h2>
+  <div class="distance">
+    <div class="country"><div class="flag">🇹🇳</div><strong>TUNISIA</strong><br><span class="small">where one half of this story is waiting</span></div>
+    <div class="line"></div>
+    <div class="country"><div class="flag">🇫🇷</div><strong>PARIS</strong><br><span class="small">where the other half is waiting</span></div>
+  </div>
+  <p>Distance tried to make this complicated.</p>
+  <p>It got calls. Time apart. Missing each other. And probably way too much overthinking.</p>
+  <p><strong>It still hasn't managed to delete the relationship.</strong> 😌</p>
+  <button onclick="go('blue')">Access the Teddy Protocol 🧸</button>
+</section>
+
+<section id="blue" class="hidden center">
+  <div class="nav"><span class="chapter">CHAPTER 03</span><span>🧸</span></div>
+  <div class="progress"><div style="width:58%"></div></div>
+  <div class="eyebrow">TOP SECRET • BLUE'S FILE</div>
+  <div class="teddy">🧸</div>
+  <h2>BLUE HAS A MESSAGE.</h2>
+  <div class="vault">
+    <div class="secret">SECURITY LEVEL: BOYFRIEND ONLY</div>
+    <p>Blue has survived the distance.</p>
+    <p>Blue has witnessed the calls.</p>
+    <p>Blue knows that his owner is loved from another country.</p>
+    <p><strong>Blue's official assessment:</strong><br>“You two are annoyingly cute. Proceed.”</p>
+  </div>
+  <br>
+  <button onclick="go('quiz')">Let Blue Test You →</button>
+</section>
+
+<section id="quiz" class="hidden">
+  <div class="nav"><span class="chapter">CHAPTER 04</span><span>🧠</span></div>
+  <div class="progress"><div id="quizProgress"></div></div>
+  <div class="eyebrow" id="quizLabel"></div>
+  <h2 id="quizQuestion"></h2>
+  <div id="quizChoices" class="choice-grid"></div>
+  <div id="quizFeedback" class="feedback"></div>
+  <button id="quizNext" class="hidden" onclick="nextQuiz()">Continue →</button>
+</section>
+
+<section id="wait" class="hidden center">
+  <div class="nav"><span class="chapter">CHAPTER 05</span><span>⏳</span></div>
+  <div class="progress"><div style="width:75%"></div></div>
+  <div class="eyebrow">THE LOADING SCREEN</div>
+  <h2>9 months is a long time.</h2>
+  <p>But imagine the alternative:</p>
+  <p><strong>giving up before getting to the part where we finally meet.</strong></p>
+  <div class="meter"><span></span></div>
+  <p class="small">DISTANCE PROGRESS: TEMPORARY</p>
+  <div class="chips">
+    <span class="chip">📞 calls survived</span>
+    <span class="chip">❤️ feelings preserved</span>
+    <span class="chip">🌍 distance defeated</span>
+    <span class="chip">🧸 Blue protected</span>
+  </div>
+  <p>So we wait.</p>
+  <p>And then one day, “goodnight” becomes “see you tomorrow.”</p>
+  <button onclick="go('boss')">One Final Challenge 💀</button>
+</section>
+
+<section id="boss" class="hidden">
+  <div class="nav"><span class="chapter">FINAL CHAPTER</span><span>💀</span></div>
+  <div class="progress"><div id="bossProgress"></div></div>
+  <div class="eyebrow">THE FINAL BOSS • BOYFRIEND EDITION</div>
+  <h2 id="bossQuestion"></h2>
+  <div id="bossChoices" class="choice-grid"></div>
+  <div id="bossFeedback" class="feedback"></div>
+  <button id="bossNext" class="hidden" onclick="nextBoss()">Defeat Boss →</button>
+</section>
+
+<section id="final" class="hidden center">
+  <div class="hero-icon">💖</div>
+  <div class="eyebrow">MISSION COMPLETE • 100%</div>
+  <h1>You Made It.</h1>
+  <p>Distance: <strong>defeated.</strong></p>
+  <p>Boyfriend: <strong>successfully identified.</strong></p>
+  <p>Blue: <strong>safe.</strong></p>
+
+  <div class="letter">
+To my favorite person,
+
+I made this because I wanted to give you something you could open from anywhere in the world and still feel a little bit closer to me.
+
+We've had calls, distance, missing each other, stupid moments, emotional moments, and all the little things that somehow became part of our story.
+
+We started this on 11 June 2026.
+
+And I don't want this game to be the end of the story.
+
+I want the next chapters to be the ones we actually live together.
+
+One day there won't be a screen between us.
+No countdown.
+No “I wish you were here.”
+
+Just you and me.
+
+Until then, keep this little universe.
+
+I love you. ❤️
+
+— Rami
+  </div>
+
+  <div class="gift">
+    <div class="eyebrow">FINAL FILE</div>
+    <h2>There is one last thing.</h2>
+    <div id="giftClosed">
+      <div class="giftbox" onclick="openGift()">🎁</div>
+      <p>Click the gift.</p>
+    </div>
+    <div id="giftOpen" class="hidden">
+      <div style="font-size:70px">💋</div>
+      <div class="reward">REWARD UNLOCKED</div>
+      <p>One enormous real-life hug.</p>
+      <p>Unlimited kisses.</p>
+      <p>All the cuddles we owe each other.</p>
+      <p><strong>Redeemable when the distance finally loses.</strong> ❤️</p>
+    </div>
+  </div>
+  <br>
+  <button class="secondary" onclick="restart()">Play Again ↻</button>
+</section>
+
+</div>
+</main>
+
+<script>
+const quiz = [
+  {
+    q:"He says “I'm fine.” What is the boyfriend protocol?",
+    a:["Believe him immediately","Ask again because you KNOW him","Send a thumbs-up","Pretend you didn't hear it"],
+    c:1,
+    good:"Correct. You have clearly studied the boyfriend manual. 😭❤️",
+    bad:"Incorrect. The boyfriend manual says: ASK AGAIN."
+  },
+  {
+    q:"What is the strongest force in this universe?",
+    a:["Gravity","A black hole","Our combined stupidity","The distance"],
+    c:2,
+    good:"Correct. Scientists hate this discovery. 💀",
+    bad:"Wrong. The correct answer was obviously our combined stupidity."
+  },
+  {
+    q:"When the distance finally disappears, what happens first?",
+    a:["Formal handshake","The biggest hug ever","A PowerPoint presentation","Run away dramatically"],
+    c:1,
+    good:"Correct. Hug protocol activated. 🫂",
+    bad:"Absolutely not. We waited too long for a handshake."
+  },
+  {
+    q:"Blue asks: 'Are my humans going to make it?'",
+    a:["Probably not","Obviously yes","Ask Blue later","Only if snacks are provided"],
+    c:1,
+    good:"Blue approves. 🧸❤️",
+    bad:"Blue is disappointed in you. 😭"
+  }
+];
+
+const boss = [
+  {
+    q:"FINAL BOSS: He steals your hoodie. What is the legally correct response?",
+    a:["Call the police","Accept that it belongs to him now","Demand it back immediately","Start a courtroom trial"],
+    c:1
+  },
+  {
+    q:"FINAL BOSS: The two of you finally meet after the distance. Your move?",
+    a:["Wave politely","Hug until time stops","Say 'hello' and leave","Ask for his ID"],
+    c:1
+  },
+  {
+    q:"ULTIMATE QUESTION: Would you choose him again?",
+    a:["No","Absolutely yes ❤️","I need legal advice","Ask Blue"],
+    c:1
+  }
+];
+
+let qi=0, bi=0;
+
+function hideAll(){
+  document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"));
+}
+
+function go(id){
+  hideAll();
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="quiz") renderQuiz();
+  if(id==="boss") renderBoss();
+}
+
+function renderQuiz(){
+  const x=quiz[qi];
+  document.getElementById("quizProgress").style.width=((qi)/quiz.length*100)+"%";
+  document.getElementById("quizLabel").textContent="THE BOYFRIEND TEST • "+(qi+1)+"/"+quiz.length;
+  document.getElementById("quizQuestion").textContent=x.q;
+  const box=document.getElementById("quizChoices");
+  box.innerHTML="";
+  document.getElementById("quizFeedback").textContent="";
+  document.getElementById("quizNext").classList.add("hidden");
+
+  x.a.forEach((text,i)=>{
+    const el=document.createElement("div");
+    el.className="choice";
+    el.textContent=text;
+    el.onclick=()=>answerQuiz(i,x.c,x);
+    box.appendChild(el);
+  });
+}
+
+function answerQuiz(selected,correct,x){
+  document.querySelectorAll("#quizChoices .choice").forEach(e=>e.classList.add("disabled"));
+  const f=document.getElementById("quizFeedback");
+  if(selected===correct){
+    f.textContent="✓ "+x.good;
+    f.className="feedback good";
+  }else{
+    f.textContent="✗ "+x.bad;
+    f.className="feedback bad";
+  }
+  document.getElementById("quizNext").classList.remove("hidden");
+}
+
+function nextQuiz(){
+  qi++;
+  if(qi<quiz.length) renderQuiz();
+  else go("wait");
+}
+
+function renderBoss(){
+  const x=boss[bi];
+  document.getElementById("bossProgress").style.width=((bi)/boss.length*100)+"%";
+  document.getElementById("bossQuestion").textContent=x.q;
+  const box=document.getElementById("bossChoices");
+  box.innerHTML="";
+  document.getElementById("bossFeedback").textContent="";
+  document.getElementById("bossNext").classList.add("hidden");
+
+  x.a.forEach((text,i)=>{
+    const el=document.createElement("div");
+    el.className="choice";
+    el.textContent=text;
+    el.onclick=()=>answerBoss(i,x.c);
+    box.appendChild(el);
+  });
+}
+
+function answerBoss(selected,correct){
+  document.querySelectorAll("#bossChoices .choice").forEach(e=>e.classList.add("disabled"));
+  const f=document.getElementById("bossFeedback");
+  if(selected===correct){
+    f.textContent="✓ BOSS DEFEATED. ❤️";
+    f.className="feedback good";
+  }else{
+    f.textContent="✗ The boss has seen your answer. Try again emotionally. 😭";
+    f.className="feedback bad";
+  }
+  document.getElementById("bossNext").classList.remove("hidden");
+}
+
+function nextBoss(){
+  bi++;
+  if(bi<boss.length) renderBoss();
+  else go("final");
+}
+
+function openGift(){
+  document.getElementById("giftClosed").classList.add("hidden");
+  document.getElementById("giftOpen").classList.remove("hidden");
+  celebrate();
+}
+
+function celebrate(){
+  const emojis=["❤️","💖","✨","💋","⭐","🧸"];
+  for(let i=0;i<65;i++){
+    const e=document.createElement("span");
+    e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.position="fixed";
+    e.style.left=Math.random()*100+"vw";
+    e.style.top="-30px";
+    e.style.fontSize=(15+Math.random()*25)+"px";
+    e.style.zIndex="999";
+    e.style.pointerEvents="none";
+    e.style.transition="transform 2.6s linear,opacity 2.6s";
+    document.body.appendChild(e);
+    setTimeout(()=>{
+      e.style.transform="translateY(120vh) rotate("+(Math.random()*900-450)+"deg)";
+      e.style.opacity="0";
+    },30);
+    setTimeout(()=>e.remove(),2700);
+  }
+}
+
+function restart(){
+  qi=0; bi=0;
+  document.getElementById("giftClosed").classList.remove("hidden");
+  document.getElementById("giftOpen").classList.add("hidden");
+  go("start");
+}
+
+for(let i=0;i<100;i++){
+  const s=document.createElement("i");
+  s.className="star";
+  const size=1+Math.random()*3;
+  s.style.width=size+"px";
+  s.style.height=size+"px";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.animationDelay=Math.random()*3+"s";
+  document.getElementById("stars").appendChild(s);
+}
+</script>
+</body>
+</html>'''
+
+path = out / "index.html"
+path.write_text(html, encoding="utf-8")
+
+zip_path = Path("/mnt/data/Boyfriend_Quest_V2.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    z.write(path, "index.html")
+
+print(f"Created: {path}")
+print(f"ZIP: {zip_path}")
